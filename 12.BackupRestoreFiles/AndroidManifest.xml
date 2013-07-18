@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="vinicorp.dolphin.file.backuprestorefiles"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+    <application
+        android:name="vinicorp.dolphin.file.backuprestorefiles.sky.LiveSdkSampleApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="vinicorp.dolphin.file.backuprestorefiles.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="vinicorp.dolphin.file.backuprestorefiles.dropbox.DBRoulette"
+            android:configChanges="orientation|keyboard"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.dropbox.client2.android.AuthActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask" >
+            <intent-filter>
+
+                <!-- Change this to be db- followed by your app key -->
+                <data android:scheme="db-pi3w6cmueewctip" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <!-- sky drive -->
+        <activity
+            android:name="vinicorp.dolphin.file.backuprestorefiles.sky.SignInActivity"
+            android:configChanges="orientation" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="vinicorp.dolphin.file.backuprestorefiles.sky.ExplorerActivity" >
+        </activity>
+        <activity
+            android:name="vinicorp.dolphin.file.backuprestorefiles.sky.MainActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        <activity android:name="vinicorp.dolphin.file.backuprestorefiles.sky.skydrive.SkyDriveActivity" >
+        </activity>
+        <activity android:name="vinicorp.dolphin.file.backuprestorefiles.sky.identity.ViewProfileActivity" >
+        </activity>
+        <activity android:name="vinicorp.dolphin.file.backuprestorefiles.sky.util.FilePicker" >
+        </activity>
+        <activity android:name="vinicorp.dolphin.file.backuprestorefiles.sky.hotmail.ContactsActivity" >
+        </activity>
+        <!-- google -->
+        <activity
+            android:name="vinicorp.dolphin.file.backuprestorefiles.googledrive.GoogleActivity"
+            android:label="@string/app_name" >
+        </activity>
+    </application>
+
+</manifest>
