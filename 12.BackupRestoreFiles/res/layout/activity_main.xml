@@ -45,6 +45,13 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onListDropbox"
+            android:text="List" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:onClick="onDropboxLogout"
             android:text="Out" />
     </LinearLayout>
@@ -80,7 +87,12 @@
             android:layout_height="wrap_content"
             android:onClick="onDownLoadSky"
             android:text="Down" />
-
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onListSky"
+            android:text="List" />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
@@ -104,13 +116,14 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="doGoogle"
+            android:onClick="onLoginGoogle"
             android:text="Login" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="onUploadGoogle"
             android:text="Up" />
 
         <Button
@@ -118,7 +131,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Down" />
-
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onListGoogle"
+            android:text="List" />
         <Button
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
