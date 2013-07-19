@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 //Hello, Im' dolphin from home
 //Hello, Im' dolphin from Vinicorp
+//Im' dolphin from Vinicorp too
 public class MainActivity extends Activity implements OnFileHostLoginListener, OnDownloadListener, OnUploadListener, OnLogoutListener {
 	FileHandler mFileHandler;
 	public static int COMMAND_UPLOAD_FILE_DROPBOX = 0;
