@@ -82,8 +82,12 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 	private static Drive service;
 
 	public void onLoginGoogle(View v) {
-		credential = GoogleAccountCredential.usingOAuth2(this, DriveScopes.DRIVE);
-		startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
+		// credential = GoogleAccountCredential.usingOAuth2(this,
+		// DriveScopes.DRIVE);
+		// startActivityForResult(credential.newChooseAccountIntent(),
+		// REQUEST_ACCOUNT_PICKER);
+		Intent i = new Intent(this, GoogleActivity.class);
+		startActivity(i);
 	}
 
 	public void onUploadGoogle(View v) {
@@ -149,19 +153,48 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 
 	List<File> mGFile;
 
+	private List<File> sendRequest() {
+		List<File> result = new ArrayList<File>();
+
+		try {
+			Files.List request = service.files().list().setQ("trashed = false");
+
+			do {
+				try {
+					FileList files = request.execute();
+
+					result.addAll(files.getItems());
+					request.setPageToken(files.getNextPageToken());
+				} catch (IOException e) {
+					System.out.println("An error occurred: " + e);
+					request.setPageToken(null);
+				}
+			} while (request.getPageToken() != null && request.getPageToken().length() > 0);
+
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		for (File file : result) {
+			Log.d("Dolphin got file", "file : " + file.getTitle());
+		}
+		return result;
+	}
+
 	public void onListGoogle(View v) {
 		AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
 
 			@Override
 			protected String doInBackground(Void... arg0) {
 				// TODO Auto-generated method stub
-				try {
-					mGFile = retrieveAllFiles();
-					int i = 0;
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				// try {
+				// mGFile = retrieveAllFiles();
+				// int i = 0;
+				// } catch (IOException e) {
+				// // TODO Auto-generated catch block
+				// e.printStackTrace();
+				// }
+				sendRequest();
 				return null;
 			}
 
