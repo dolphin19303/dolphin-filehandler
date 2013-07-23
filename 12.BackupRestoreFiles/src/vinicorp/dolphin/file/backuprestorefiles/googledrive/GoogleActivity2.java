@@ -56,9 +56,9 @@ public class GoogleActivity2 extends Activity {
 
 	private static final String CLIENTSECRETS_LOCATION = "client_secrets.json";
 
-	private static final String CLIENT_ID = "YOUR_CLIENT_ID";
+	private static final String CLIENT_ID = "761092507359-9l445lht0iep8ghvi6lplpnehqji9tja.apps.googleusercontent.com";
 
-	private static final String CLIENT_SECRET = "YOUR_CLIENT_SECRET ";
+	private static final String CLIENT_SECRET = "mruykd18e-XI-qxLRpV4H6rv ";
 
 	private static GoogleClientSecrets clientSecrets = null;
 	private static final List<String> SCOPES = Arrays.asList("https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/userinfo.email",

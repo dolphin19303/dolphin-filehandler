@@ -1,5 +1,8 @@
 package vinicorp.dolphin.file.backuprestorefiles;
 
+import java.io.BufferedOutputStream;
+import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -82,12 +85,10 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 	private static Drive service;
 
 	public void onLoginGoogle(View v) {
-		// credential = GoogleAccountCredential.usingOAuth2(this,
-		// DriveScopes.DRIVE);
-		// startActivityForResult(credential.newChooseAccountIntent(),
-		// REQUEST_ACCOUNT_PICKER);
-		Intent i = new Intent(this, GoogleActivity.class);
-		startActivity(i);
+		credential = GoogleAccountCredential.usingOAuth2(this, DriveScopes.DRIVE);
+		startActivityForResult(credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
+		// Intent i = new Intent(this, GoogleActivity.class);
+		// startActivity(i);
 	}
 
 	public void onUploadGoogle(View v) {
@@ -129,7 +130,7 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 			@Override
 			public void run() {
 				try {
-					com.google.api.services.drive.model.File file = service.files().get("0B-Iak7O9SfIpYk9zTjZvY2xreVU").execute();
+					com.google.api.services.drive.model.File file = service.files().get("0B-q3bUcLnb5aWHhoYnF3N2lBRmc").execute();
 					// FileList file = service.files().list().execute();
 					// List<com.google.api.services.drive.model.File> fileList =
 					// file.getItems();
@@ -140,7 +141,8 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 					if (file.getDownloadUrl() != null && file.getDownloadUrl().length() > 0) {
 						HttpResponse resp = service.getRequestFactory().buildGetRequest(new GenericUrl(file.getDownloadUrl())).execute();
 						InputStream inputStream = resp.getContent();
-						// writeToFile(inputStream);
+						java.io.File mFile = new java.io.File("/sdcard/aa.jpg");
+						writeToFile(inputStream, mFile);
 					}
 				} catch (IOException e) {
 					Log.e("WriteToFile", e.toString());
@@ -149,6 +151,20 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 			}
 		});
 		thread.start();
+	}
+
+	public void writeToFile(InputStream is, java.io.File file) {
+		try {
+			DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+			int c;
+			while ((c = is.read()) != -1) {
+				out.writeByte(c);
+			}
+			is.close();
+			out.close();
+		} catch (IOException e) {
+			System.err.println("Error Writing/Reading Streams.");
+		}
 	}
 
 	List<File> mGFile;
@@ -176,7 +192,8 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 		}
 
 		for (File file : result) {
-			Log.d("Dolphin got file", "file : " + file.getTitle());
+			Log.d("Dolphin got file", "file : " + file.getTitle() + " " + file.getId());
+
 		}
 		return result;
 	}
@@ -194,19 +211,25 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 				// // TODO Auto-generated catch block
 				// e.printStackTrace();
 				// }
-				sendRequest();
+				// sendRequest();
+				try {
+					retrieveAllFiles();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				return null;
 			}
 
 			protected void onPostExecute(String result) {
-				Log.d("Dolphin get glist", String.valueOf(mGFile.size()));
+				Log.d("Dolphin get glist", "Okay");
 			};
 		};
 		task.execute();
 		Log.d("Dolphin counting", "aa");
 	}
 
-	private List<File> retrieveAllFiles() throws IOException {
+	public List<File> retrieveAllFiles() throws IOException {
 		List<File> result = new ArrayList<File>();
 		Files.List request = service.files().list();
 
@@ -221,7 +244,10 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 				request.setPageToken(null);
 			}
 		} while (request.getPageToken() != null && request.getPageToken().length() > 0);
+		for (File file : result) {
+			Log.d("Dolphin got file", "file : " + file.getTitle() + " " + file.getId());
 
+		}
 		return result;
 	}
 

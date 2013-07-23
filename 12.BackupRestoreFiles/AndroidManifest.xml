@@ -85,6 +85,10 @@
             android:name="vinicorp.dolphin.file.backuprestorefiles.googledrive.GoogleActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="vinicorp.dolphin.file.backuprestorefiles.googledrive.GoogleActivity2"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>
