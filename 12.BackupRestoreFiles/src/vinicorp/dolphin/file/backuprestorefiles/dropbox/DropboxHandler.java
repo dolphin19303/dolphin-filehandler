@@ -44,13 +44,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.DropboxAPI.Account;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.android.AuthActivity;
 import com.dropbox.client2.exception.DropboxException;
+import com.dropbox.client2.exception.DropboxIOException;
+import com.dropbox.client2.exception.DropboxServerException;
+import com.dropbox.client2.exception.DropboxUnlinkedException;
 import com.dropbox.client2.session.AccessTokenPair;
 import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session.AccessType;
 import com.dropbox.client2.session.TokenPair;
+import com.dropbox.client2.session.WebAuthSession;
 
 public class DropboxHandler implements OnAsyncDownloadListener, OnAsyncUploadListener {
 	private static final String TAG = "DBRoulette";
@@ -79,7 +84,7 @@ public class DropboxHandler implements OnAsyncDownloadListener, OnAsyncUploadLis
 	final static private String ACCESS_SECRET_NAME = "ACCESS_SECRET";
 
 	DropboxAPI<AndroidAuthSession> mApi;
-
+	DropboxAPI<WebAuthSession> mWebApi;
 	private boolean mLoggedIn;
 
 	// Android widgets
@@ -102,7 +107,7 @@ public class DropboxHandler implements OnAsyncDownloadListener, OnAsyncUploadLis
 		// We create a new AuthSession so that we can use the Dropbox API.
 		AndroidAuthSession session = buildSession();
 		mApi = new DropboxAPI<AndroidAuthSession>(session);
-
+//		mWebApi = new DropboxAPI<WebAuthSession>(session);
 		checkAppKeySetup();
 
 		// Display the proper UI state if logged in or not
@@ -127,6 +132,34 @@ public class DropboxHandler implements OnAsyncDownloadListener, OnAsyncUploadLis
 		}
 	}
 
+	public void getAccountInfo() {
+		Account mAccount;
+		try {
+			mAccount = mApi.accountInfo();
+		} catch (DropboxUnlinkedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DropboxServerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DropboxIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DropboxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	// DropboxUnlinkedException - if you have not set an access token pair on
+	// the session, or if the user has revoked access.
+	// DropboxServerException - if the server responds with an error code. See
+	// the constants in DropboxServerException for the meaning of each error
+	// code.
+	// DropboxIOException - if any network-related error occurs.
+	// DropboxException - for any other unknown errors. This is also a
+	// superclass of all other Dropbox exceptions, so you may want to only catch
+	// this exception which signals that some
 	// public void WriteFile() {
 	// Intent intent = new Intent();
 	// // Picture from camera

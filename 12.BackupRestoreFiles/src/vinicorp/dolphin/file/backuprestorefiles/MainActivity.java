@@ -270,7 +270,8 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 	}
 
 	public void onDropboxLogout(View v) {
-		mFileHandler.LogOut(FileHandler.FILEHOST_DROPBOX);
+		// mFileHandler.LogOut(FileHandler.FILEHOST_DROPBOX);
+		mFileHandler.getUserInfo(FileHandler.FILEHOST_DROPBOX);
 	}
 
 	public void onDownloadDropbox(View v) {
@@ -294,7 +295,6 @@ public class MainActivity extends Activity implements OnFileHostLoginListener, O
 
 	public void onLogoutSky(View v) {
 		mFileHandler.LogOut(FileHandler.FILEHOST_SKYDRIVE);
-
 	}
 
 	public void onDownLoadSky(View v) {

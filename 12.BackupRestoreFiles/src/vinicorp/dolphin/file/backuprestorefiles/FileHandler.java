@@ -19,8 +19,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-public class FileHandler implements OnSkydriveLoginListener, OnDropboxLoginListener, OnGetListSkydriveListener, OnGetListDropboxListener, OnGetFileIdFromNameListener,
-		OnDownloadSkyListener, OnUploadSkyListener, OnDownloadDropboxListener, OnUploadDropboxListener {
+public class FileHandler implements OnSkydriveLoginListener, OnDropboxLoginListener, OnGetListSkydriveListener, OnGetListDropboxListener,
+		OnGetFileIdFromNameListener, OnDownloadSkyListener, OnUploadSkyListener, OnDownloadDropboxListener, OnUploadDropboxListener {
 	public static final String FILEHOST_SKYDRIVE = "skydrive";
 	public static final String FILEHOST_GOOGLEDRIVE = "googledrive";
 	public static final String FILEHOST_DROPBOX = "dropbox";
@@ -47,6 +47,14 @@ public class FileHandler implements OnSkydriveLoginListener, OnDropboxLoginListe
 		mDropboxHandler.setOnDownloadDropboxListener(this);
 		mDropboxHandler.setOnUploadDropboxListener(this);
 
+	}
+
+	public void getUserInfo(String host) {
+		if (host.compareTo(FILEHOST_DROPBOX) == 0) {
+			mDropboxHandler.getAccountInfo();
+		} else if (host.compareTo(FILEHOST_GOOGLEDRIVE) == 0) {
+		} else if (host.compareTo(FILEHOST_SKYDRIVE) == 0) {
+		}
 	}
 
 	// process
